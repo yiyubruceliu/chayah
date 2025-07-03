@@ -1,0 +1,41 @@
+{
+  "name": "chayah-kalahari-project",
+  "version": "1.0.0",
+  "description": "Chayah Kalahari Project NPC - Meerkat Conservation Website",
+  "main": "index.html",
+  "scripts": {
+    "build": "npm run clean && npm run copy-assets && npm run minify-html && npm run minify-css && npm run minify-js && npm run optimize-images",
+    "clean": "rimraf dist",
+    "copy-assets": "copyfiles -u 1 \"img/**/*\" dist/",
+    "minify-html": "html-minifier --collapse-whitespace --remove-comments --remove-optional-tags --remove-redundant-attributes --remove-script-type-attributes --remove-tag-whitespace --use-short-doctype --minify-css true --minify-js true --input-dir . --output-dir dist --file-ext html",
+    "minify-css": "cleancss -o dist/styles.min.css styles.css",
+    "minify-js": "uglifyjs script.js -o dist/script.min.js -c -m",
+    "optimize-images": "imagemin img/**/* --out-dir=dist/img",
+    "serve": "serve dist",
+    "dev": "serve ."
+  },
+  "keywords": [
+    "meerkat",
+    "conservation",
+    "wildlife",
+    "rehabilitation",
+    "south-africa",
+    "kalahari"
+  ],
+  "author": "Chayah Kalahari Project NPC",
+  "license": "MIT",
+  "devDependencies": {
+    "clean-css-cli": "^5.6.2",
+    "copyfiles": "^2.4.1",
+    "html-minifier-terser": "^7.2.0",
+    "imagemin": "^8.0.1",
+    "imagemin-cli": "^7.0.0",
+    "imagemin-jpegtran": "^7.0.0",
+    "imagemin-mozjpeg": "^10.0.0",
+    "imagemin-pngquant": "^9.0.2",
+    "rimraf": "^5.0.5",
+    "serve": "^14.2.1",
+    "sharp": "^0.32.6",
+    "uglify-js": "^3.17.4"
+  }
+} 
