@@ -15,7 +15,7 @@ This guide will help you deploy the optimized website to your web server.
    node build.js
    ```
 
-3. **Upload the `dist/` folder contents** to your web server
+3. **Upload the `docs/` folder contents** to your web server
 
 ### Option 2: Manual Build
 
@@ -29,10 +29,10 @@ If you prefer to build manually or don't have Node.js:
 
 ## 📁 Build Output
 
-After running the build script, you'll have a `dist/` folder containing:
+After running the build script, you'll have a `docs/` folder containing:
 
 ```
-dist/
+docs/
 ├── index.html          # Minified HTML
 ├── styles.min.css      # Minified CSS
 ├── script.min.js       # Minified JavaScript
@@ -49,7 +49,7 @@ dist/
 
 ### Apache Server (Most Common)
 
-1. **Upload all files** from the `dist/` folder to your web root
+1. **Upload all files** from the `docs/` folder to your web root
 2. **The `.htaccess` file** will automatically:
    - Enable GZIP compression
    - Set browser caching
@@ -95,7 +95,7 @@ server {
 
 1. **Connect your repository** to your hosting service
 2. **Set build command**: `node build.js`
-3. **Set publish directory**: `dist`
+3. **Set publish directory**: `docs`
 4. **Deploy automatically** on git push
 
 ## 🔧 Performance Optimization
@@ -107,8 +107,8 @@ server {
    # Install image optimization tools
    npm install -g imagemin-cli imagemin-mozjpeg imagemin-pngquant
    
-   # Optimize images
-   imagemin img/**/* --out-dir=dist/img
+       # Optimize images
+    imagemin img/**/* --out-dir=docs/img
    ```
 
 2. **Enable HTTPS**

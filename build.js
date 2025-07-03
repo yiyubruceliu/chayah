@@ -11,9 +11,9 @@ try {
     console.log('💡 Install with: npm install sharp');
 }
 
-// Create dist directory if it doesn't exist
-if (!fs.existsSync('dist')) {
-    fs.mkdirSync('dist');
+// Create docs directory if it doesn't exist
+if (!fs.existsSync('docs')) {
+    fs.mkdirSync('docs');
 }
 
 console.log('🚀 Starting build process...');
@@ -40,7 +40,7 @@ function minifyHTML() {
     minified = minified.replace('styles.css', 'styles.min.css');
     minified = minified.replace('script.js', 'script.min.js');
     
-    fs.writeFileSync('dist/index.html', minified);
+    fs.writeFileSync('docs/index.html', minified);
     console.log('✅ HTML minified');
 }
 
@@ -67,7 +67,7 @@ function minifyCSS() {
     minified = minified.replace(/\n/g, '');
     minified = minified.replace(/\r/g, '');
     
-    fs.writeFileSync('dist/styles.min.css', minified);
+    fs.writeFileSync('docs/styles.min.css', minified);
     console.log('✅ CSS minified');
 }
 
@@ -96,7 +96,7 @@ function minifyJS() {
     minified = minified.replace(/\n/g, '');
     minified = minified.replace(/\r/g, '');
     
-    fs.writeFileSync('dist/script.min.js', minified);
+    fs.writeFileSync('docs/script.min.js', minified);
     console.log('✅ JavaScript minified');
 }
 
@@ -104,14 +104,14 @@ function minifyJS() {
 async function compressImages() {
     console.log('🖼️ Processing images...');
     
-    // Create img directory in dist
-    if (!fs.existsSync('dist/img')) {
-        fs.mkdirSync('dist/img', { recursive: true });
+    // Create img directory in docs
+    if (!fs.existsSync('docs/img')) {
+        fs.mkdirSync('docs/img', { recursive: true });
     }
     
     // Create gallery directory
-    if (!fs.existsSync('dist/img/gallery')) {
-        fs.mkdirSync('dist/img/gallery', { recursive: true });
+    if (!fs.existsSync('docs/img/gallery')) {
+        fs.mkdirSync('docs/img/gallery', { recursive: true });
     }
     
     let totalOriginalSize = 0;
@@ -127,9 +127,9 @@ async function compressImages() {
             try {
                 await sharp('img/Logo.jpg')
                     .jpeg({ quality: 85, progressive: true })
-                    .toFile('dist/img/Logo.jpg');
+                    .toFile('docs/img/Logo.jpg');
                 
-                const compressedStats = fs.statSync('dist/img/Logo.jpg');
+                const compressedStats = fs.statSync('docs/img/Logo.jpg');
                 totalCompressedSize += compressedStats.size;
                 processedCount++;
                 
@@ -137,12 +137,12 @@ async function compressImages() {
                 console.log(`   Logo.jpg: ${(logoStats.size / 1024 / 1024).toFixed(2)}MB → ${(compressedStats.size / 1024 / 1024).toFixed(2)}MB (${savings}% smaller)`);
             } catch (error) {
                 console.log(`   ⚠️  Could not compress Logo.jpg, copying original`);
-                fs.copyFileSync('img/Logo.jpg', 'dist/img/Logo.jpg');
+                fs.copyFileSync('img/Logo.jpg', 'docs/img/Logo.jpg');
                 totalCompressedSize += logoStats.size;
                 processedCount++;
             }
         } else {
-            fs.copyFileSync('img/Logo.jpg', 'dist/img/Logo.jpg');
+            fs.copyFileSync('img/Logo.jpg', 'docs/img/Logo.jpg');
             totalCompressedSize += logoStats.size;
             processedCount++;
         }
@@ -158,7 +158,7 @@ async function compressImages() {
         
         for (const file of imageFiles) {
             const inputPath = path.join(galleryDir, file);
-            const outputPath = path.join('dist/img/gallery', file);
+            const outputPath = path.join('docs/img/gallery', file);
             const stats = fs.statSync(inputPath);
             totalOriginalSize += stats.size;
             
@@ -246,7 +246,7 @@ function createManifest() {
         }
     };
     
-    fs.writeFileSync('dist/manifest.json', JSON.stringify(manifest, null, 2));
+    fs.writeFileSync('docs/manifest.json', JSON.stringify(manifest, null, 2));
     console.log('✅ Manifest created');
 }
 
@@ -294,7 +294,7 @@ function createHtaccess() {
 # RewriteRule ^(.*)$ https://%{HTTP_HOST}%{REQUEST_URI} [L,R=301]
 `;
     
-    fs.writeFileSync('dist/.htaccess', htaccess);
+    fs.writeFileSync('docs/.htaccess', htaccess);
     console.log('✅ .htaccess created');
 }
 
@@ -311,7 +311,7 @@ Sitemap: https://chayahkalahari.org/sitemap.xml
 # Crawl-delay
 Crawl-delay: 1`;
     
-    fs.writeFileSync('dist/robots.txt', robotsTxt);
+    fs.writeFileSync('docs/robots.txt', robotsTxt);
     console.log('✅ robots.txt created');
 }
 
@@ -329,7 +329,7 @@ function createSitemap() {
     </url>
 </urlset>`;
     
-    fs.writeFileSync('dist/sitemap.xml', sitemap);
+    fs.writeFileSync('docs/sitemap.xml', sitemap);
     console.log('✅ sitemap.xml created');
 }
 
@@ -346,28 +346,28 @@ async function build() {
         createSitemap();
         
         console.log('\n🎉 Build completed successfully!');
-        console.log('📁 Output directory: dist/');
+        console.log('📁 Output directory: docs/');
         console.log('📊 File sizes:');
         
         // Show file sizes
         const files = ['index.html', 'styles.min.css', 'script.min.js'];
         files.forEach(file => {
-            if (fs.existsSync(`dist/${file}`)) {
-                const stats = fs.statSync(`dist/${file}`);
+            if (fs.existsSync(`docs/${file}`)) {
+                const stats = fs.statSync(`docs/${file}`);
                 const sizeKB = (stats.size / 1024).toFixed(2);
                 console.log(`   ${file}: ${sizeKB} KB`);
             }
         });
         
         // Show image directory size
-        if (fs.existsSync('dist/img')) {
-            const imgStats = getDirectorySize('dist/img');
+        if (fs.existsSync('docs/img')) {
+            const imgStats = getDirectorySize('docs/img');
             const imgSizeMB = (imgStats / 1024 / 1024).toFixed(2);
             console.log(`   img/: ${imgSizeMB} MB`);
         }
         
         console.log('\n🚀 Ready for deployment!');
-        console.log('💡 Tip: Upload the contents of the dist/ folder to your web server.');
+        console.log('💡 Tip: Upload the contents of the docs/ folder to your web server.');
         
     } catch (error) {
         console.error('❌ Build failed:', error.message);
