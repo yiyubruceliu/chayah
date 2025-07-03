@@ -79,7 +79,7 @@ document.addEventListener('keydown', (e) => {
 // Contact Form Handling
 const contactForm = document.getElementById('contactForm');
 
-contactForm.addEventListener('submit', (e) => {
+contactForm.addEventListener('submit', async (e) => {
     e.preventDefault();
     
     const formData = new FormData(contactForm);
@@ -98,20 +98,33 @@ contactForm.addEventListener('submit', (e) => {
         return;
     }
     
-    // Simulate form submission
     const submitBtn = contactForm.querySelector('.submit-button');
     const originalText = submitBtn.textContent;
     
     submitBtn.textContent = 'Sending...';
     submitBtn.disabled = true;
     
-    // Simulate API call
-    setTimeout(() => {
-        alert('Thank you for your message! We will get back to you soon.');
-        contactForm.reset();
+    try {
+        const response = await fetch('send-email.php', {
+            method: 'POST',
+            body: formData
+        });
+        
+        const result = await response.json();
+        
+        if (result.success) {
+            alert(result.message);
+            contactForm.reset();
+        } else {
+            alert(result.message || 'There was an error sending your message. Please try again.');
+        }
+    } catch (error) {
+        console.error('Form submission error:', error);
+        alert('There was an error sending your message. Please try again or contact us directly.');
+    } finally {
         submitBtn.textContent = originalText;
         submitBtn.disabled = false;
-    }, 2000);
+    }
 });
 
 function isValidEmail(email) {
