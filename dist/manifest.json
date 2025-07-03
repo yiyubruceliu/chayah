@@ -1,0 +1,17 @@
+{
+  "name": "Chayah Kalahari Project NPC",
+  "version": "1.0.0",
+  "buildDate": "2025-07-03T16:10:29.451Z",
+  "files": {
+    "html": "index.html",
+    "css": "styles.min.css",
+    "js": "script.min.js",
+    "images": "img/"
+  },
+  "optimization": {
+    "htmlMinified": true,
+    "cssMinified": true,
+    "jsMinified": true,
+    "imagesOptimized": true
+  }
+}
