@@ -88,10 +88,11 @@ function minifyJS() {
     minified = minified.replace(/\s*,\s*/g, ',');
     minified = minified.replace(/\s*=\s*/g, '=');
     minified = minified.replace(/\s*\+\s*/g, '+');
-    minified = minified.replace(/\s*-\s*/g, '-');
     minified = minified.replace(/\s*\*\s*/g, '*');
     minified = minified.replace(/\s*\/\s*/g, '/');
-    
+    // DO NOT minify spaces before negative values in CSS-like strings (e.g. rootMargin)
+    minified = minified.replace(/(\d+px)\s*-\s*(\d+px)/g, '$1 -$2');
+    minified = minified.replace(/(\d+%)\s*-\s*(\d+%)/g, '$1 -$2');
     // Remove line breaks
     minified = minified.replace(/\n/g, '');
     minified = minified.replace(/\r/g, '');
