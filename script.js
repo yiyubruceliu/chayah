@@ -199,12 +199,12 @@ workObserver.observe(workSection);
 // Preload gallery images
 function preloadImages() {
     const imageUrls = [
-        'img/gallery/_DSF9200.JPG',
-        'img/gallery/_DSF9194.JPG',
-        'img/gallery/_DSF9190.JPG',
-        'img/gallery/_DSF9188.JPG',
-        'img/gallery/_DSF9185.JPG',
-        'img/gallery/_DSF9179.JPG'
+        'img/gallery/DSF9200.JPG',
+        'img/gallery/DSF9194.JPG',
+        'img/gallery/DSF9190.JPG',
+        'img/gallery/DSF9188.JPG',
+        'img/gallery/DSF9185.JPG',
+        'img/gallery/DSF9179.JPG'
     ];
     
     imageUrls.forEach(url => {
@@ -286,29 +286,29 @@ const fullGalleryGrid = document.getElementById('fullGalleryGrid');
 
 // All gallery images with descriptions
 const allGalleryImages = [
-    { src: 'img/gallery/_DSF9200.JPG', alt: 'Young meerkat receiving veterinary care during rehabilitation at Chayah Kalahari Project' },
-    { src: 'img/gallery/_DSF9194.JPG', alt: 'Meerkat mob socializing in natural Kalahari desert habitat during rehabilitation' },
-    { src: 'img/gallery/_DSF9190.JPG', alt: 'Meerkat rehabilitation activities and survival skills training at Chayah facility' },
-    { src: 'img/gallery/_DSF9188.JPG', alt: 'Stunning Kalahari desert landscape where meerkats are rehabilitated and released' },
-    { src: 'img/gallery/_DSF9185.JPG', alt: 'Successful meerkat release back into the wild Kalahari desert environment' },
-    { src: 'img/gallery/_DSF9179.JPG', alt: 'Conservation work and meerkat monitoring in the Kalahari desert ecosystem' },
-    { src: 'img/gallery/_XPN5438.JPG', alt: 'Meerkat family group in their natural Kalahari desert environment' },
-    { src: 'img/gallery/_XPN5433.JPG', alt: 'Meerkat standing guard while others forage in the desert landscape' },
-    { src: 'img/gallery/_XPN5406.JPG', alt: 'Meerkat rehabilitation progress showing natural behaviors restored' },
-    { src: 'img/gallery/_XPN5343.JPG', alt: 'Meerkat mob interaction and social bonding during rehabilitation' },
-    { src: 'img/gallery/_XPN5340.JPG', alt: 'Meerkat exploring rehabilitated habitat in the Kalahari desert' },
-    { src: 'img/gallery/_XPN5334.JPG', alt: 'Meerkat receiving specialized care and attention from conservation team' },
-    { src: 'img/gallery/_XPN5333.JPG', alt: 'Meerkat showing natural foraging behaviors in desert environment' },
-    { src: 'img/gallery/_XPN5316.JPG', alt: 'Meerkat family unit demonstrating successful rehabilitation outcomes' },
-    { src: 'img/gallery/_XPN5307.JPG', alt: 'Meerkat social interaction and communication in natural habitat' },
-    { src: 'img/gallery/_XPN5304.JPG', alt: 'Meerkat rehabilitation facility showing professional care standards' },
-    { src: 'img/gallery/_XPN5246.JPG', alt: 'Meerkat release preparation and final health checks before return to wild' },
-    { src: 'img/gallery/_DSF9227.JPG', alt: 'Meerkat conservation work and habitat monitoring in Kalahari desert' },
-    { src: 'img/gallery/_DSF9225.JPG', alt: 'Meerkat rehabilitation success story showing natural behaviors' },
-    { src: 'img/gallery/_DSF9220.JPG', alt: 'Meerkat family dynamics and social structure in rehabilitation' },
-    { src: 'img/gallery/_DSF9216.JPG', alt: 'Meerkat adaptation to natural desert environment during rehabilitation' },
-    { src: 'img/gallery/_DSF9214.JPG', alt: 'Meerkat conservation education and community outreach activities' },
-    { src: 'img/gallery/_DSF9202.JPG', alt: 'Meerkat rehabilitation facility and professional care environment' }
+    { src: 'img/gallery/DSF9200.JPG', alt: 'Young meerkat receiving veterinary care during rehabilitation at Chayah Kalahari Project' },
+    { src: 'img/gallery/DSF9194.JPG', alt: 'Meerkat mob socializing in natural Kalahari desert habitat during rehabilitation' },
+    { src: 'img/gallery/DSF9190.JPG', alt: 'Meerkat rehabilitation activities and survival skills training at Chayah facility' },
+    { src: 'img/gallery/DSF9188.JPG', alt: 'Stunning Kalahari desert landscape where meerkats are rehabilitated and released' },
+    { src: 'img/gallery/DSF9185.JPG', alt: 'Successful meerkat release back into the wild Kalahari desert environment' },
+    { src: 'img/gallery/DSF9179.JPG', alt: 'Conservation work and meerkat monitoring in the Kalahari desert ecosystem' },
+    { src: 'img/gallery/XPN5438.JPG', alt: 'Meerkat family group in their natural Kalahari desert environment' },
+    { src: 'img/gallery/XPN5433.JPG', alt: 'Meerkat standing guard while others forage in the desert landscape' },
+    { src: 'img/gallery/XPN5406.JPG', alt: 'Meerkat rehabilitation progress showing natural behaviors restored' },
+    { src: 'img/gallery/XPN5343.JPG', alt: 'Meerkat mob interaction and social bonding during rehabilitation' },
+    { src: 'img/gallery/XPN5340.JPG', alt: 'Meerkat exploring rehabilitated habitat in the Kalahari desert' },
+    { src: 'img/gallery/XPN5334.JPG', alt: 'Meerkat receiving specialized care and attention from conservation team' },
+    { src: 'img/gallery/XPN5333.JPG', alt: 'Meerkat showing natural foraging behaviors in desert environment' },
+    { src: 'img/gallery/XPN5316.JPG', alt: 'Meerkat family unit demonstrating successful rehabilitation outcomes' },
+    { src: 'img/gallery/XPN5307.JPG', alt: 'Meerkat social interaction and communication in natural habitat' },
+    { src: 'img/gallery/XPN5304.JPG', alt: 'Meerkat rehabilitation facility showing professional care standards' },
+    { src: 'img/gallery/XPN5246.JPG', alt: 'Meerkat release preparation and final health checks before return to wild' },
+    { src: 'img/gallery/DSF9227.JPG', alt: 'Meerkat conservation work and habitat monitoring in Kalahari desert' },
+    { src: 'img/gallery/DSF9225.JPG', alt: 'Meerkat rehabilitation success story showing natural behaviors' },
+    { src: 'img/gallery/DSF9220.JPG', alt: 'Meerkat family dynamics and social structure in rehabilitation' },
+    { src: 'img/gallery/DSF9216.JPG', alt: 'Meerkat adaptation to natural desert environment during rehabilitation' },
+    { src: 'img/gallery/DSF9214.JPG', alt: 'Meerkat conservation education and community outreach activities' },
+    { src: 'img/gallery/DSF9202.JPG', alt: 'Meerkat rehabilitation facility and professional care environment' }
 ];
 
 // Function to populate full gallery
