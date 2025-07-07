@@ -154,43 +154,75 @@ body {
 
 /* Hero Section */
 .hero {
-    background: linear-gradient(135deg, var(--secondary-beige) 0%, var(--white) 100%);
+    background: url('img/Background.jpg') center center/cover no-repeat;
     min-height: 100vh;
     display: flex;
-    align-items: center;
+    align-items: end;
     justify-content: center;
     text-align: center;
     padding: 100px 20px 50px;
+    position: relative;
+    background-size: auto 750px;
+}
+
+.hero::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background: rgba(183, 183, 183, 0.18);
+    z-index: 1;
 }
 
 .hero-container {
-    max-width: 800px;
+    position: relative;
+    z-index: 2;
+    display: flex;
+    justify-content: end;
+    align-items: flex-end;
+    min-height: 60vh;
+}
+
+.hero-content {
+    background: rgba(96, 96, 96, 1);
+    padding: 2.5rem 2.5rem 2.5rem 2rem;
+    border-radius: 1.5rem;
+    max-width: 520px;
+    margin-left: auto;
+    margin-right: 4vw;
+    text-align: left;
+    box-shadow: 0 4px 24px rgba(0,0,0,0.10);
 }
 
 .hero-logo {
-    width: 150px;
-    height: 150px;
-    border-radius: 50%;
+    width: 100vw;
+    height: auto;
+    max-height: 60vh;
     object-fit: cover;
     margin-bottom: 2rem;
     box-shadow: 0 10px 30px var(--shadow);
+    border-radius: 0;
 }
 
 .hero-title {
     font-size: 3rem;
     font-weight: 700;
-    color: var(--primary-orange);
+    color: var(--white);
     margin-bottom: 1rem;
     line-height: 1.2;
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.7);
 }
 
 .hero-subtitle {
     font-size: 1.3rem;
-    color: var(--text-light);
+    color: var(--white);
     margin-bottom: 2rem;
     max-width: 600px;
     margin-left: auto;
     margin-right: auto;
+    text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.7);
 }
 
 .cta-button {
@@ -494,6 +526,12 @@ body {
     .full-gallery-grid {
         grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
         gap: 1rem;
+    }
+
+    .hero {
+        background: url('img/Logo.jpg') center center/contain no-repeat, #fff;
+        background-size: auto 500px;
+        align-items: end;
     }
 }
 

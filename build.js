@@ -19,9 +19,9 @@ if (!fs.existsSync('docs')) {
 console.log('🚀 Starting build process...');
 
 // Function to minify HTML
-function minifyHTML() {
+function minifyHTML(page) {
     console.log('📄 Minifying HTML...');
-    const html = fs.readFileSync('index.html', 'utf8');
+    const html = fs.readFileSync(page, 'utf8');
     
     // Remove comments
     let minified = html.replace(/<!--[\s\S]*?-->/g, '');
@@ -40,7 +40,7 @@ function minifyHTML() {
     minified = minified.replace('styles.css', 'styles.min.css');
     minified = minified.replace('script.js', 'script.min.js');
     
-    fs.writeFileSync('docs/index.html', minified);
+    fs.writeFileSync('docs/' + page, minified);
     console.log('✅ HTML minified');
 }
 
@@ -145,6 +145,36 @@ async function compressImages() {
         } else {
             fs.copyFileSync('img/Logo.jpg', 'docs/img/Logo.jpg');
             totalCompressedSize += logoStats.size;
+            processedCount++;
+        }
+    }
+    
+    // Process background
+    if (fs.existsSync('img/Background.jpg')) {
+        const backgroundStats = fs.statSync('img/Background.jpg');
+        totalOriginalSize += backgroundStats.size;
+        
+        if (sharp) {
+            try {
+                await sharp('img/Background.jpg')
+                    .jpeg({ quality: 85, progressive: true })
+                    .toFile('docs/img/Background.jpg');
+                
+                const compressedStats = fs.statSync('docs/img/Background.jpg');
+                totalCompressedSize += compressedStats.size;
+                processedCount++;
+                
+                const savings = ((backgroundStats.size - compressedStats.size) / backgroundStats.size * 100).toFixed(1);
+                console.log(`   Background.jpg: ${(backgroundStats.size / 1024 / 1024).toFixed(2)}MB → ${(compressedStats.size / 1024 / 1024).toFixed(2)}MB (${savings}% smaller)`);
+            } catch (error) {
+                console.log(`   ⚠️  Could not compress Background.jpg, copying original`);
+                fs.copyFileSync('img/Background.jpg', 'docs/img/Background.jpg');
+                totalCompressedSize += backgroundStats.size;
+                processedCount++;
+            }
+        } else {
+            fs.copyFileSync('img/Background.jpg', 'docs/img/Background.jpg');
+            totalCompressedSize += backgroundStats.size;
             processedCount++;
         }
     }
@@ -338,7 +368,8 @@ function createSitemap() {
 async function build() {
     try {
         await compressImages();
-        minifyHTML();
+        minifyHTML('index.html');
+        minifyHTML('donate.html');
         minifyCSS();
         minifyJS();
         createManifest();
@@ -351,7 +382,7 @@ async function build() {
         console.log('📊 File sizes:');
         
         // Show file sizes
-        const files = ['index.html', 'styles.min.css', 'script.min.js'];
+        const files = ['index.html', 'donate.html', 'styles.min.css', 'script.min.js'];
         files.forEach(file => {
             if (fs.existsSync(`docs/${file}`)) {
                 const stats = fs.statSync(`docs/${file}`);
