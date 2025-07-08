@@ -1,11 +1,13 @@
 {
   "name": "Chayah Kalahari Project NPC",
-  "version": "1.0.0",
-  "buildDate": "2025-07-08T19:12:30.416Z",
+  "version": "202507082201",
+  "buildDate": "2025-07-08T20:02:33.675Z",
   "files": {
     "html": "index.html",
-    "css": "styles.min.css",
-    "js": "script.min.js",
+    "donate": "donate.html",
+    "css": "styles.min.css?v=202507082201",
+    "js": "script.min.js?v=202507082201",
+    "donateJs": "donate.min.js?v=202507082201",
     "images": "img/"
   },
   "optimization": {
@@ -13,5 +15,10 @@
     "cssMinified": true,
     "jsMinified": true,
     "imagesOptimized": true
+  },
+  "cacheBusting": {
+    "enabled": true,
+    "method": "query_parameter",
+    "version": "202507082201"
   }
 }

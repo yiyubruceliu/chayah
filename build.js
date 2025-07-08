@@ -11,6 +11,20 @@ try {
     console.log('💡 Install with: npm install sharp');
 }
 
+// Version generation
+function generateVersion() {
+    const now = new Date();
+    const year = now.getFullYear();
+    const month = String(now.getMonth() + 1).padStart(2, '0');
+    const day = String(now.getDate()).padStart(2, '0');
+    const hour = String(now.getHours()).padStart(2, '0');
+    const minute = String(now.getMinutes()).padStart(2, '0');
+    return `${year}${month}${day}${hour}${minute}`;
+}
+
+const currentVersion = generateVersion();
+console.log(`📦 Build version: ${currentVersion}`);
+
 // Create docs directory if it doesn't exist
 if (!fs.existsSync('docs')) {
     fs.mkdirSync('docs');
@@ -36,9 +50,13 @@ function minifyHTML(page) {
     minified = minified.replace(/\n/g, '');
     minified = minified.replace(/\r/g, '');
     
-    // Update CSS and JS references to minified versions
-    minified = minified.replace('styles.css', 'styles.min.css');
-    minified = minified.replace('script.js', 'script.min.js');
+    // Update CSS and JS references to minified versions with versioning
+    minified = minified.replace('styles.css', `styles.min.css?v=${currentVersion}`);
+    if (page === 'donate.html') {
+        minified = minified.replace('donate.js', `donate.min.js?v=${currentVersion}`);
+    } else {
+        minified = minified.replace('script.js', `script.min.js?v=${currentVersion}`);
+    }
     
     fs.writeFileSync('docs/' + page, minified);
     console.log('✅ HTML minified');
@@ -74,31 +92,50 @@ function minifyCSS() {
 // Function to minify JavaScript
 function minifyJS() {
     console.log('⚡ Minifying JavaScript...');
-    const js = fs.readFileSync('script.js', 'utf8');
     
-    // Remove comments (single line and multi-line)
-    let minified = js.replace(/\/\/.*$/gm, '');
-    minified = minified.replace(/\/\*[\s\S]*?\*\//g, '');
+    // Minify script.js
+    const scriptJs = fs.readFileSync('script.js', 'utf8');
+    let minifiedScript = scriptJs.replace(/\/\/.*$/gm, '');
+    minifiedScript = minifiedScript.replace(/\/\*[\s\S]*?\*\//g, '');
+    minifiedScript = minifiedScript.replace(/\s+/g, ' ');
+    minifiedScript = minifiedScript.replace(/\s*{\s*/g, '{');
+    minifiedScript = minifiedScript.replace(/\s*}\s*/g, '}');
+    minifiedScript = minifiedScript.replace(/\s*;\s*/g, ';');
+    minifiedScript = minifiedScript.replace(/\s*,\s*/g, ',');
+    minifiedScript = minifiedScript.replace(/\s*=\s*/g, '=');
+    minifiedScript = minifiedScript.replace(/\s*\+\s*/g, '+');
+    minifiedScript = minifiedScript.replace(/\s*\*\s*/g, '*');
+    minifiedScript = minifiedScript.replace(/\s*\/\s*/g, '/');
+    minifiedScript = minifiedScript.replace(/(\d+px)\s*-\s*(\d+px)/g, '$1 -$2');
+    minifiedScript = minifiedScript.replace(/(\d+%)\s*-\s*(\d+%)/g, '$1 -$2');
+    minifiedScript = minifiedScript.replace(/\n/g, '');
+    minifiedScript = minifiedScript.replace(/\r/g, '');
     
-    // Remove extra whitespace
-    minified = minified.replace(/\s+/g, ' ');
-    minified = minified.replace(/\s*{\s*/g, '{');
-    minified = minified.replace(/\s*}\s*/g, '}');
-    minified = minified.replace(/\s*;\s*/g, ';');
-    minified = minified.replace(/\s*,\s*/g, ',');
-    minified = minified.replace(/\s*=\s*/g, '=');
-    minified = minified.replace(/\s*\+\s*/g, '+');
-    minified = minified.replace(/\s*\*\s*/g, '*');
-    minified = minified.replace(/\s*\/\s*/g, '/');
-    // DO NOT minify spaces before negative values in CSS-like strings (e.g. rootMargin)
-    minified = minified.replace(/(\d+px)\s*-\s*(\d+px)/g, '$1 -$2');
-    minified = minified.replace(/(\d+%)\s*-\s*(\d+%)/g, '$1 -$2');
-    // Remove line breaks
-    minified = minified.replace(/\n/g, '');
-    minified = minified.replace(/\r/g, '');
+    fs.writeFileSync('docs/script.min.js', minifiedScript);
+    console.log('✅ script.js minified');
     
-    fs.writeFileSync('docs/script.min.js', minified);
-    console.log('✅ JavaScript minified');
+    // Minify donate.js if it exists
+    if (fs.existsSync('donate.js')) {
+        const donateJs = fs.readFileSync('donate.js', 'utf8');
+        let minifiedDonate = donateJs.replace(/\/\/.*$/gm, '');
+        minifiedDonate = minifiedDonate.replace(/\/\*[\s\S]*?\*\//g, '');
+        minifiedDonate = minifiedDonate.replace(/\s+/g, ' ');
+        minifiedDonate = minifiedDonate.replace(/\s*{\s*/g, '{');
+        minifiedDonate = minifiedDonate.replace(/\s*}\s*/g, '}');
+        minifiedDonate = minifiedDonate.replace(/\s*;\s*/g, ';');
+        minifiedDonate = minifiedDonate.replace(/\s*,\s*/g, ',');
+        minifiedDonate = minifiedDonate.replace(/\s*=\s*/g, '=');
+        minifiedDonate = minifiedDonate.replace(/\s*\+\s*/g, '+');
+        minifiedDonate = minifiedDonate.replace(/\s*\*\s*/g, '*');
+        minifiedDonate = minifiedDonate.replace(/\s*\/\s*/g, '/');
+        minifiedDonate = minifiedDonate.replace(/(\d+px)\s*-\s*(\d+px)/g, '$1 -$2');
+        minifiedDonate = minifiedDonate.replace(/(\d+%)\s*-\s*(\d+%)/g, '$1 -$2');
+        minifiedDonate = minifiedDonate.replace(/\n/g, '');
+        minifiedDonate = minifiedDonate.replace(/\r/g, '');
+        
+        fs.writeFileSync('docs/donate.min.js', minifiedDonate);
+        console.log('✅ donate.js minified');
+    }
 }
 
 // Function to compress and copy images
@@ -261,12 +298,14 @@ function createManifest() {
     
     const manifest = {
         name: 'Chayah Kalahari Project NPC',
-        version: '1.0.0',
+        version: currentVersion,
         buildDate: new Date().toISOString(),
         files: {
             html: 'index.html',
-            css: 'styles.min.css',
-            js: 'script.min.js',
+            donate: 'donate.html',
+            css: `styles.min.css?v=${currentVersion}`,
+            js: `script.min.js?v=${currentVersion}`,
+            donateJs: `donate.min.js?v=${currentVersion}`,
             images: 'img/'
         },
         optimization: {
@@ -274,6 +313,11 @@ function createManifest() {
             cssMinified: true,
             jsMinified: true,
             imagesOptimized: !!sharp // Set to true if Sharp is available
+        },
+        cacheBusting: {
+            enabled: true,
+            method: 'query_parameter',
+            version: currentVersion
         }
     };
     
@@ -364,6 +408,25 @@ function createSitemap() {
     console.log('✅ sitemap.xml created');
 }
 
+// Function to create version file
+function createVersionFile() {
+    console.log('📝 Creating version file...');
+    
+    const versionInfo = {
+        version: currentVersion,
+        buildDate: new Date().toISOString(),
+        buildTimestamp: Date.now(),
+        files: {
+            css: `styles.min.css?v=${currentVersion}`,
+            js: `script.min.js?v=${currentVersion}`,
+            donateJs: `donate.min.js?v=${currentVersion}`
+        }
+    };
+    
+    fs.writeFileSync('docs/version.txt', JSON.stringify(versionInfo, null, 2));
+    console.log('✅ Version file created');
+}
+
 // Main build function
 async function build() {
     try {
@@ -376,13 +439,15 @@ async function build() {
         createHtaccess();
         createRobotsTxt();
         createSitemap();
+        createVersionFile();
         
         console.log('\n🎉 Build completed successfully!');
         console.log('📁 Output directory: docs/');
+        console.log(`📦 Build version: ${currentVersion}`);
         console.log('📊 File sizes:');
         
         // Show file sizes
-        const files = ['index.html', 'donate.html', 'styles.min.css', 'script.min.js'];
+        const files = ['index.html', 'donate.html', 'styles.min.css', 'script.min.js', 'donate.min.js'];
         files.forEach(file => {
             if (fs.existsSync(`docs/${file}`)) {
                 const stats = fs.statSync(`docs/${file}`);
@@ -390,6 +455,11 @@ async function build() {
                 console.log(`   ${file}: ${sizeKB} KB`);
             }
         });
+        
+        console.log('\n🔗 Versioned URLs:');
+        console.log(`   CSS: styles.min.css?v=${currentVersion}`);
+        console.log(`   JS: script.min.js?v=${currentVersion}`);
+        console.log(`   Donate JS: donate.min.js?v=${currentVersion}`);
         
         // Show image directory size
         if (fs.existsSync('docs/img')) {

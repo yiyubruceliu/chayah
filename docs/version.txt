@@ -1,0 +1,10 @@
+{
+  "version": "202507082201",
+  "buildDate": "2025-07-08T20:02:33.679Z",
+  "buildTimestamp": 1752004953679,
+  "files": {
+    "css": "styles.min.css?v=202507082201",
+    "js": "script.min.js?v=202507082201",
+    "donateJs": "donate.min.js?v=202507082201"
+  }
+}
