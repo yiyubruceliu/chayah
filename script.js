@@ -13,6 +13,26 @@ document.querySelectorAll('.nav-link').forEach(n => n.addEventListener('click', 
     navMenu.classList.remove('active');
 }));
 
+// Nav logo click to navigate to index.html and scroll to top
+const navLogo = document.querySelector('.nav-logo');
+if (navLogo) {
+    navLogo.addEventListener('click', () => {
+        // If we're already on index.html, just scroll to top
+        if (window.location.pathname.endsWith('index.html') || window.location.pathname === '/' || window.location.pathname === '') {
+            window.scrollTo({
+                top: 0,
+                behavior: 'smooth'
+            });
+        } else {
+            // Navigate to index.html and scroll to top
+            window.location.href = 'index.html#top';
+        }
+    });
+    
+    // Add cursor pointer to indicate it's clickable
+    navLogo.style.cursor = 'pointer';
+}
+
 // Smooth scrolling for navigation links
 document.querySelectorAll('a[href^="#"]').forEach(anchor => {
     anchor.addEventListener('click', function (e) {
@@ -367,4 +387,51 @@ document.addEventListener('keydown', (e) => {
             document.body.style.overflow = 'auto';
         }
     }
-}); 
+});
+
+// Donate Page Functions
+// Bank Modal Functionality
+function openBankModal() {
+    const bankModal = document.getElementById('bankModal');
+    if (bankModal) {
+        bankModal.style.display = 'block';
+    }
+}
+
+function closeBankModal() {
+    const bankModal = document.getElementById('bankModal');
+    if (bankModal) {
+        bankModal.style.display = 'none';
+    }
+}
+
+// Close bank modal when clicking outside
+window.addEventListener('click', function(event) {
+    const bankModal = document.getElementById('bankModal');
+    if (bankModal && event.target === bankModal) {
+        closeBankModal();
+    }
+});
+
+// Copy to clipboard functionality
+function copyToClipboard(elementId) {
+    const element = document.getElementById(elementId);
+    if (!element) return;
+    
+    const text = element.textContent;
+    
+    navigator.clipboard.writeText(text).then(function() {
+        const button = event.target;
+        const originalText = button.textContent;
+        button.textContent = 'Copied!';
+        button.classList.add('copied');
+        
+        setTimeout(function() {
+            button.textContent = originalText;
+            button.classList.remove('copied');
+        }, 2000);
+    }).catch(function(err) {
+        console.error('Could not copy text: ', err);
+        alert('Could not copy to clipboard. Please copy manually: ' + text);
+    });
+} 
