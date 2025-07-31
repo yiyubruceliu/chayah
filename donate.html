@@ -63,9 +63,14 @@
         
         .donation-grid {
             display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(350px, 1fr));
+            grid-template-columns: repeat(2, 1fr);
             gap: 30px;
             margin-top: 40px;
+            max-width: 1200px;
+            margin-left: auto;
+            margin-right: auto;
+            justify-content: center;
+            align-items: center;
         }
         
         .donation-card {
@@ -75,10 +80,12 @@
             background: white;
             border-radius: 15px;
             padding: 40px;
+            max-width: 360px ;
             box-shadow: 0 10px 30px rgba(0,0,0,0.1);
             text-align: center;
             transition: transform 0.3s ease, box-shadow 0.3s ease;
             border: 2px solid transparent;
+            margin: 0 auto;
         }
         
         .donation-card:hover {
@@ -161,6 +168,15 @@
             box-shadow: 0 5px 15px rgba(40, 167, 69, 0.3);
         }
         
+        .donation-btn.yoco {
+            background: #009FDA;
+        }
+        
+        .donation-btn.yoco:hover {
+            background: #0088C7;
+            box-shadow: 0 5px 15px rgba(0, 159, 218, 0.3);
+        }
+        
         .bank-details {
             background: #f8f9fa;
             border-radius: 10px;
@@ -239,6 +255,7 @@
             .donation-grid {
                 grid-template-columns: 1fr;
                 gap: 20px;
+                max-width: 100%;
             }
             
             .donation-card {
@@ -369,6 +386,16 @@
                     <button class="donation-btn" onclick="openBankModal()">
                         <i class="fas fa-university"></i> Show Bank Details
                     </button>
+                </div>
+
+                <!-- Yoco Option -->
+                <div class="donation-card">
+                    <i class="fas fa-credit-card donation-icon" style="color: #009FDA;"></i>
+                    <h3>Yoco Payment</h3>
+                    <p>Secure card payments for South African donors. Quick and easy online donations with instant processing.</p>
+                    <a href="https://pay.yoco.com/solidearth-meerkat-rehab-and-rescue" target="_blank" rel="noopener" class="donation-btn yoco">
+                        <i class="fas fa-credit-card"></i> Donate via Yoco
+                    </a>
                 </div>
             </div>
             

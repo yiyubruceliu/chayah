@@ -3,7 +3,7 @@
 // Modify these settings as needed
 
 // Recipient email (where contact form messages will be sent)
-$config['recipient_email'] = 'alma.solidearth@gmail.com';
+$config['recipient_email'] = 'info@meerkatrescue.org';
 
 // Organization details
 $config['organization_name'] = 'Chayah Kalahari Project NPC';
@@ -16,7 +16,7 @@ $config['whatsapp'] = '+27 83 388 0898';
 $config['facebook'] = 'https://www.facebook.com/SolidearthMeerkat';
 
 // Email settings
-$config['from_email'] = 'noreply@chayahkalahari.org';
+$config['from_email'] = 'noreply@meerkatrescue.org';
 $config['from_name'] = 'Chayah Kalahari Project';
 $config['subject_prefix'] = 'New Contact Form Message - ';
 

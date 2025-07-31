@@ -22,7 +22,7 @@ Edit `email-config.php` to customize your email settings:
 
 ```php
 // Recipient email (where contact form messages will be sent)
-$config['recipient_email'] = 'alma.solidearth@gmail.com';
+$config['recipient_email'] = 'info@meerkatrescue.org';
 
 // Organization details
 $config['organization_name'] = 'Chayah Kalahari Project NPC';
